@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS TipoOrganizacion;
 
 CREATE TABLE TipoOrganizacion(
 
-	idTipoOrganizacion SERIAL PRIMARY KEY,
+	idTipoOrganizacion BIGSERIAL PRIMARY KEY,
 	
 	nombre varchar NOT NULL,
 	
@@ -14,10 +14,12 @@ CREATE TABLE TipoOrganizacion(
 CREATE TABLE public.Users(
 	
 	-- Llaves
-    idUsuario SERIAL PRIMARY KEY,
-	
+    idUsuario BIGSERIAL PRIMARY KEY,
+
 	idTipoOrganizacion bigint NOT NULL,
-	
+
+	usuario_uid UUID NOT NULL,
+
 	-- Usuario
     nombre varchar NOT NULL,
 
@@ -26,12 +28,13 @@ CREATE TABLE public.Users(
 	contrasenna varchar NOT NULL,
 	
 	-- Otros datos
-	nombreOrganizacion varchar NOT NULL,
 	razon varchar NOT  NULL,
 	
 	-- Trazabilidad
     ultimaActualizacion TIMESTAMPTZ NOT NULL,
     borrado boolean NOT NULL,
+	
+	UNIQUE(correo),
 	
 	FOREIGN KEY(idTipoOrganizacion)
 		REFERENCES TipoOrganizacion MATCH SIMPLE
