@@ -21,7 +21,7 @@ app.post("/api/login",async(req,res) =>{
   const query: string = `select splogin(
     '${correo}' :: varchar,
     '${contrasenna}' :: varchar);`;
-  
+
   pool_users.connect((err, client, release) => {
     if (err) {
       res.sendStatus(500);
@@ -45,7 +45,7 @@ app.post("/api/login",async(req,res) =>{
 app.post("/api/getUserInfo",async(req,res) =>{
   const correo: string = req.body.correo;
 
-  const query: string = `select correo,nombre,uuid from spGetUserInfo('${correo}');`;
+  const query: string = `select uid,nombre,correo,nombretipoOrganizacion,razon from spGetUserInfo('${correo}');`;
   
   pool_users.connect((err, client, release) => {
     if (err) {
@@ -60,8 +60,7 @@ app.post("/api/getUserInfo",async(req,res) =>{
         return console.error('Error executing query', err.stack)
       }
       
-
-      res.status(200).send(result.rows[0]);
+      res.status(200).send({"info":result.rows[0]});
 
     })
   })
