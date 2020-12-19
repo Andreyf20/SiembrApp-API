@@ -49,7 +49,7 @@ CREATE TABLE public.metodoDispersion(
 CREATE TABLE public.plantas(
     
     -- PK
-    idPlanta SERIAL PRIMARY KEY,
+    idPlanta BIGSERIAL PRIMARY KEY,
 
     -- FKs
     idFamilia bigint NOT NULL,
@@ -94,4 +94,22 @@ CREATE TABLE public.plantas(
         REFERENCES public.metodoDispersion MATCH SIMPLE
 );
 
-
+CREATE TABLE public.plantasXusuario(
+	
+	-- PK
+	idPlantaXUsuario BIGSERIAL NOT NULL PRIMARY KEY,
+	
+	-- FK
+	idPlanta BIGINT NOT NULL,
+	
+	-- User ID
+	idUser BIGINT NOT NULL,
+	
+	 -- Mantenimineto
+    ultimaActualizacion TIMESTAMP NOT NULL,
+    borrado boolean NOT NULL,
+	
+	FOREIGN KEY(idPlanta)
+		REFERENCES plantas MATCH SIMPLE
+	
+);
