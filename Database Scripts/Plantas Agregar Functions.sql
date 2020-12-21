@@ -41,6 +41,7 @@ $$ LANGUAGE PLPGSQL;
 
 /*
 select spAgregarFamilia('Fabaceae') as success;
+select spAgregarFamilia('Annonaceae') as success;
 SELECT * FROM familia;
 */
 
@@ -83,6 +84,7 @@ $$ LANGUAGE PLPGSQL;
 
 /*
 select spAgregarFenologia('Caducifolio') as success;
+select spAgregarFenologia('Perennefolio') as success;
 select * from fenologia;
 */
 
@@ -165,6 +167,7 @@ $$ LANGUAGE PLPGSQL;
 
 /*
 SELECT spAgregarMetodoDispersion('Autocoria') as success;
+SELECT spAgregarMetodoDispersion('Zoocoria') as success;
 select * from metodoDispersion;
 */
 
@@ -317,6 +320,9 @@ $$ LANGUAGE PLPGSQL;
 
 -- Agregar filas catalogo
 SELECT spAgregarFamilia('Fabaceae') as success;
+SELECT spAgregarFamilia('Annonaceae') as success;
 SELECT spAgregarFenologia('Caducifolio') as success;
+SELECT spAgregarFenologia('Perennefolio') as success;
 SELECT spAgregarAgentePolinizador('Insectos') as success;
 SELECT spAgregarMetodoDispersion('Autocoria') as success;
+SELECT spAgregarMetodoDispersion('Zoocoria') as success;
