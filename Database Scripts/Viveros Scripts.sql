@@ -61,7 +61,6 @@ CREATE TABLE Telefonos(
 
 -- Funciones
 
-
 -- Agregar
 CREATE OR REPLACE FUNCTION spAgregarVivero(
 	nombreInput varchar,
@@ -170,31 +169,29 @@ $$ LANGUAGE PLPGSQL;
 
 -- Listar viveros
 
-CREATE OR REPLACE FUNCTION spGetInfoVivero()
+CREATE OR REPLACE FUNCTION spListViveros()
 RETURNS TABLE(nombre varchar, direccion varchar)
 AS
 $$
-	DECLARE 
-	
-		idViveroLookup BIGINT := (SELECT V.idVivero FROM Viveros V WHERE LOWER(V.nombre) LIKE LOWER(nombreViveroInput) and V.borrado = FALSE);
-	
 	BEGIN
 	
 		RETURN QUERY
-		SELECT V.nombre, V.direccion FROM Viveros V WHERE V.idVivero = idViveroLookup;
+		SELECT V.nombre, V.direccion FROM Viveros V WHERE V.borrado = FALSE;
 		
 	END;
 $$ LANGUAGE PLPGSQL;
 
 
--- Consultar informacion de viveros
+-- Consultar informacion de vivero
 
-CREATE OR REPLACE FUNCTION spGetViveros()
+CREATE OR REPLACE FUNCTION spGetInfoVivero()
 RETURNS TABLE(nombre varchar, direccion varchar)
 AS
 $$
 	DECLARE 
-	
+		
+		idViveroLookup BIGINT := (SELECT V.idVivero FROM Viveros V WHERE LOWER(V.nombre) LIKE LOWER(nombreViveroInput) and V.borrado = FALSE);
+		
 	BEGIN
 	
 		RETURN QUERY
