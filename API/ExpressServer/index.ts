@@ -341,6 +341,168 @@ app.post("/api/getPlantasDeUsuario",async(req,res) =>{
   })
 })
 
+
+app.post("/api/agregarVivero",async(req,res) =>{
+  const nombre: string = req.body.nombreVivero;
+  const direccion: string = req.body.direccion;
+
+  const query: string = 
+  `
+  SELECT spAgregarVivero('${nombre}','${direccion}') as success;
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send(result.rows[0]);
+      
+    })
+  })
+})
+
+app.post("/api/agregarTelefonoVivero",async(req,res) =>{
+  const nombre: string = req.body.nombreVivero;
+  const nuevoTel: string = req.body.telefono;
+
+  const query: string = 
+  `
+  SELECT spAgregarTelefono('${nombre}','${nuevoTel}') as success;
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send(result.rows[0]);
+      
+    })
+  })
+})
+
+app.post("/api/agregarHorarioAVivero",async(req,res) =>{
+  const nombre: string = req.body.nombreVivero;
+  const inicio: string = req.body.horaInicio;
+  const final: string = req.body.horaFin;
+  const dias: string = req.body.dias;
+
+  const query: string = 
+  `
+  SELECT spAgregarHorario('${nombre}','${inicio}','${final}','${dias}') as success;
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send(result.rows[0]);
+      
+    })
+  })
+})
+
+app.post("/api/getInfoVivero",async(req,res) =>{
+  const nombreVivero: string = req.body.nombreVivero;
+
+  const query: string = 
+  `
+  SELECT spGetInfoVivero('${nombreVivero}') as success;
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send(result.rows[0]);
+      
+    })
+  })
+})
+
+app.post("/api/getTelefonosVivero",async(req,res) =>{
+  const nombreVivero: string = req.body.nombreVivero;
+
+  const query: string = 
+  `
+  SELECT spGetTelefonosVivero('${nombreVivero}') as success;
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send(result.rows[0]);
+      
+    })
+  })
+})
+
+app.post("/api/getHorariosVivero",async(req,res) =>{
+  const nombreVivero: string = req.body.nombreVivero;
+
+  const query: string = 
+  `
+  SELECT spGetHorarioVivero('${nombreVivero}') as success;
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send(result.rows[0]);
+      
+    })
+  })
+})
+
 var port = 5000;
 
 app.listen(port, () => console.log(`Api listening on port ${port}!`))
