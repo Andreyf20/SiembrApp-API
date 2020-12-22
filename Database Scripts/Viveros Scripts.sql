@@ -27,15 +27,16 @@ CREATE TABLE Horarios(
 	-- Numero
 	horaInicio varchar NOT NULL,
 	horaFin varchar NOT NULL,
-	
 	-- Dias
-	dias varchar NOT NULL,
+	dias varchar NOT NULL UNIQUE,
 	
 	ultimaActualizacion TIMESTAMP NOT NULL,
     borrado boolean NOT NULL,
 	
 	FOREIGN KEY (idvivero)
-		REFERENCES Viveros MATCH SIMPLE
+		REFERENCES Viveros MATCH SIMPLE,
+	
+	UNIQUE(horaInicio,horaFin)
 
 );
 
@@ -48,7 +49,7 @@ CREATE TABLE Telefonos(
 	idVivero BIGSERIAL NOT NULL,
 	
 	-- Numero
-	numeroTel varchar NOT NULL,
+	numeroTel varchar NOT NULL UNIQUE,
 	
 	ultimaActualizacion TIMESTAMP NOT NULL,
     borrado boolean NOT NULL,
