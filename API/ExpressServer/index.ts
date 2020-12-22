@@ -503,6 +503,30 @@ app.post("/api/getHorariosVivero",async(req,res) =>{
   })
 })
 
+app.get("/api/listViveros",async(req,res) =>{
+  const query: string = 
+  `
+  SELECT nombre, direccion FROM spListViveros();
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      //res.status(200).send(result);
+      res.status(200).send(result.rows[0]);
+    })
+  })
+})
+
 var port = 5000;
 
 app.listen(port, () => console.log(`Api listening on port ${port}!`))
