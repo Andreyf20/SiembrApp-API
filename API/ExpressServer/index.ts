@@ -456,7 +456,7 @@ app.post("/api/getTelefonosVivero",async(req,res) =>{
 
   const query: string = 
   `
-  SELECT spGetTelefonosVivero('${nombreVivero}') as success;
+  SELECT telefono FROM spGetTelefonosVivero('${nombreVivero}') as success;
   `;
   
   pool_plants.connect((err, client, release) => {
@@ -471,7 +471,7 @@ app.post("/api/getTelefonosVivero",async(req,res) =>{
         res.sendStatus(500);
         return console.error('Error executing query', err.stack)
       }
-      res.status(200).send(result.rows[0]);
+      res.status(200).send({"telefonos":result.rows});
       
     })
   })
@@ -482,7 +482,7 @@ app.post("/api/getHorariosVivero",async(req,res) =>{
 
   const query: string = 
   `
-  SELECT spGetHorarioVivero('${nombreVivero}') as success;
+  SELECT horaInicio,horaFin,dias FROM spGetHorarioVivero('${nombreVivero}');
   `;
   
   pool_plants.connect((err, client, release) => {
@@ -497,7 +497,7 @@ app.post("/api/getHorariosVivero",async(req,res) =>{
         res.sendStatus(500);
         return console.error('Error executing query', err.stack)
       }
-      res.status(200).send(result.rows[0]);
+      res.status(200).send({"horarios":result.rows});
       
     })
   })
@@ -522,7 +522,7 @@ app.get("/api/listViveros",async(req,res) =>{
         return console.error('Error executing query', err.stack)
       }
       //res.status(200).send(result);
-      res.status(200).send(result.rows[0]);
+      res.status(200).send({"viveros":result.rows});
     })
   })
 })
