@@ -235,6 +235,35 @@ $$
 	END;
 $$ LANGUAGE PLPGSQL;
 
+
+CREATE OR REPLACE FUNCTION spModificarDireccionVivero(
+	nombreViveroInput varchar,
+	direccionNueva varchar
+) RETURNS BOOLEAN
+AS
+$$
+
+	DECLARE 
+	
+		idViveroLookup BIGINT := (SELECT V.idVivero FROM Viveros V WHERE LOWER(V.nombre) LIKE LOWER(nombreViveroInput) and V.borrado = FALSE);
+
+	BEGIN
+	
+		IF idViveroLookup IS NOT NULL THEN
+			
+			UPDATE Viveros
+
+				SET direccion = direccionNueva;
+
+			RETURN TRUE;
+		ELSE
+			RETURN FALSE;
+		END IF;
+		
+	END;
+
+$$ LANGUAGE PLPGSQL;
+
 /*
 SELECT spAgregarVivero('FUNDAZOO','Calle Ross De la Cruz Roja de Santa Ana 300 metros oeste y 200 metros norte, San José, Santa Ana') as success;
 SELECT spAgregarTelefono('FUNDAZOO','2282 8434') as success;
@@ -245,5 +274,3 @@ SELECT * from spGetInfoVivero('FUNDAZOO');
 SELECT * from spGetTelefonosVivero('FUNDAZOO');
 SELECT * from spGetHorarioVivero('FUNDAZOO');
 */
-
-
