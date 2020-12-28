@@ -113,15 +113,15 @@ app.get("/api/ver_plantas/:filtro",async(req,res) =>{
 
 app.post("/api/register_user",async(req,res) =>{
 
-  const user: User = new User(req.body.nombre, req.body.correo, hash_sp_password(req.body.contrasenna), req.body.tipoOrganizacion,req.body.razon,req.body.razon);
+  const user: User = new User(req.body.nombre, req.body.correo, hash_sp_password(req.body.contrasenna), req.body.tipoOrganizacion,req.body.razon,req.body.admin);
 
   const query: string = `select spcrearusuario(
     '${user.nombre}' :: varchar,
     '${user.correo}' :: varchar,
     '${user.contrasenna}' :: varchar,
     '${user.tipoOrganizacion}' :: varchar,
-    '${user.razon}' :: varchar),
-    '${user.admin}':: boolean;`;
+    '${user.razon}' :: varchar,
+    '${user.admin}':: boolean);`;
 
   pool_users.connect((err, client, release) => {
     if (err) {
