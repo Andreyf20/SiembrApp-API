@@ -59,7 +59,7 @@ RETURNS TABLE(
 AS $$
 	DECLARE
 		
-		nombretipoorganizacion varchar := (SELECT T.nombre FROM users U INNER JOIN tipoOrganizacion T ON U.idTipoOrganizacion = T.idTipoOrganizacion);
+		nombretipoorganizacion varchar := (SELECT T.nombre FROM users U INNER JOIN tipoOrganizacion T ON U.idTipoOrganizacion = T.idTipoOrganizacion where U.correo = correoInput);
 		uidString varchar :=  (SELECT spGetUserUUIDwithEmail(correoInput));
 		
 	BEGIN
