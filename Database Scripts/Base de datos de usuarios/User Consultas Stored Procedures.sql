@@ -55,7 +55,8 @@ RETURNS TABLE(
     nombre varchar,
 	correo varchar,
 	nombretipoOrganizacion varchar,
-	razon varchar)
+	razon varchar,
+	admin boolean)
 AS $$
 	DECLARE
 		
@@ -66,9 +67,9 @@ AS $$
 		
 		RETURN QUERY
 		
-			SELECT uidString as uid, U.nombre as nombre , U.correo as correo, nombretipoorganizacion, U.razon as razon
+			SELECT uidString as uid, U.nombre as nombre , U.correo as correo, nombretipoorganizacion, U.razon, U.admin as razon
 			FROM public.users U;
-			
+		
     END;
 
 $$ LANGUAGE PLPGSQL;

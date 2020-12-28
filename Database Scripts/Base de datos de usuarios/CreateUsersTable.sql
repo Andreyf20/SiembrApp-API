@@ -29,6 +29,7 @@ CREATE TABLE public.Users(
 	
 	-- Otros datos
 	razon varchar NOT  NULL,
+	admin boolean NOT NULL,
 	
 	-- Trazabilidad
     ultimaActualizacion TIMESTAMPTZ NOT NULL,

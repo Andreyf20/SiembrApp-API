@@ -20,7 +20,8 @@ CREATE OR REPLACE FUNCTION spCrearUsuario(
     correoInput varchar,
     contrasennaInput varchar,
 	tipoOrganizacionInput varchar,
-	razonInput varchar
+	razonInput varchar,
+	adminInput boolean
 )
 RETURNS BOOLEAN
 AS $$
@@ -52,6 +53,7 @@ AS $$
                     idTipoOrganizacion,
 					usuario_uid,
 					razon,
+					admin,
                     ultimaActualizacion,
                     borrado
                 )
@@ -62,6 +64,7 @@ AS $$
                     idTipoOrganizacion,
 					usuario_uid,
 					razonInput,
+					adminInput,
                     NOW(),
                     FALSE
                 );
@@ -72,7 +75,7 @@ AS $$
 $$ LANGUAGE PLPGSQL;
 
 /*
-SELECT spCrearUsuario('Administrador','admin@siembrapp.com','admin','Uso personal','Personal') as success;
+SELECT spCrearUsuario('Administrador','admin@siembrapp.com','admin','Otro','Otro',TRUE) as success;
 select * from Users;
 */
 
