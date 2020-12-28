@@ -45,7 +45,7 @@ app.post("/api/login",async(req,res) =>{
 app.post("/api/getUserInfo",async(req,res) =>{
   const correo: string = req.body.correo;
 
-  const query: string = `select uid,nombre,correo,nombretipoOrganizacion,razon from spGetUserInfo('${correo}');`;
+  const query: string = `select uid,nombre,correo,nombretipoOrganizacion,razon,admin from spGetUserInfo('${correo}');`;
   
   pool_users.connect((err, client, release) => {
     if (err) {
@@ -113,14 +113,15 @@ app.get("/api/ver_plantas/:filtro",async(req,res) =>{
 
 app.post("/api/register_user",async(req,res) =>{
 
-  const user: User = new User(req.body.nombre, req.body.correo, hash_sp_password(req.body.contrasenna), req.body.tipoOrganizacion,req.body.razon);
+  const user: User = new User(req.body.nombre, req.body.correo, hash_sp_password(req.body.contrasenna), req.body.tipoOrganizacion,req.body.razon,req.body.razon);
 
   const query: string = `select spcrearusuario(
     '${user.nombre}' :: varchar,
     '${user.correo}' :: varchar,
     '${user.contrasenna}' :: varchar,
     '${user.tipoOrganizacion}' :: varchar,
-    '${user.razon}' :: varchar);`;
+    '${user.razon}' :: varchar),
+    '${user.admin}':: boolean;`;
 
   pool_users.connect((err, client, release) => {
     if (err) {
