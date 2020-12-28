@@ -10,6 +10,8 @@ Ref: https://dbtut.com/index.php/2018/10/01/column-level-encryption-with-pgcrypt
 DROP EXTENSION IF EXISTS pgcrypto;
 CREATE EXTENSION pgcrypto;
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 SET timezone = 'America/Costa_Rica';
 
 CREATE OR REPLACE FUNCTION spCrearUsuario(
@@ -18,7 +20,6 @@ CREATE OR REPLACE FUNCTION spCrearUsuario(
     correoInput varchar,
     contrasennaInput varchar,
 	tipoOrganizacionInput varchar,
-	nombreOrganizacionInput varchar,
 	razonInput varchar
 )
 RETURNS BOOLEAN
@@ -27,6 +28,7 @@ AS $$
     DECLARE
         idUsuarioBuscado BIGINT := (SELECT U.idUsuario FROM Users U WHERE U.correo LIKE correoInput);
 		idTipoOrganizacion BIGINT := (SELECT T.idTipoOrganizacion FROM TipoOrganizacion T WHERE T.nombre LIKE tipoOrganizacionInput);
+		usuario_uid uuid := (SELECT uuid_generate_v4());
     BEGIN
 
         IF idUsuarioBuscado IS NOT NULL THEN
@@ -48,7 +50,7 @@ AS $$
                     correo,
                     contrasenna,
                     idTipoOrganizacion,
-					nombreOrganizacion,
+					usuario_uid,
 					razon,
                     ultimaActualizacion,
                     borrado
@@ -58,7 +60,7 @@ AS $$
                     correoInput,
                     Crypt(contrasennaInput,'md5'),
                     idTipoOrganizacion,
-					nombreOrganizacionInput,
+					usuario_uid,
 					razonInput,
                     NOW(),
                     FALSE
