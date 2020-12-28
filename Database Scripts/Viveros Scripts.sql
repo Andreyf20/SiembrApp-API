@@ -79,13 +79,13 @@ $$ LANGUAGE PLPGSQL;
 -- Listar viveros
 
 CREATE OR REPLACE FUNCTION spListViveros()
-RETURNS TABLE(nombre varchar, direccion varchar)
+RETURNS TABLE(nombre varchar, direccion varchar,telefonos varchar, horarios varchar)
 AS
 $$
 	BEGIN
 	
 		RETURN QUERY
-		SELECT V.nombre, V.direccion FROM Viveros V WHERE V.borrado = FALSE;
+		SELECT V.nombre, V.direccion,V.telefonos,V.horarios FROM Viveros V WHERE V.borrado = FALSE;
 		
 	END;
 $$ LANGUAGE PLPGSQL;
