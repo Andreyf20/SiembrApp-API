@@ -345,66 +345,12 @@ app.post("/api/getPlantasDeUsuario",async(req,res) =>{
 app.post("/api/agregarVivero",async(req,res) =>{
   const nombre: string = req.body.nombreVivero;
   const direccion: string = req.body.direccion;
+  const telefonos: string = req.body.telefonos;
+  const horarios: string = req.body.horarios;
 
   const query: string = 
   `
-  SELECT spAgregarVivero('${nombre}','${direccion}') as success;
-  `;
-  
-  pool_plants.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-      res.status(200).send(result.rows[0]);
-      
-    })
-  })
-})
-
-app.post("/api/agregarTelefonoVivero",async(req,res) =>{
-  const nombre: string = req.body.nombreVivero;
-  const nuevoTel: string = req.body.telefono;
-
-  const query: string = 
-  `
-  SELECT spAgregarTelefono('${nombre}','${nuevoTel}') as success;
-  `;
-  
-  pool_plants.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-      res.status(200).send(result.rows[0]);
-      
-    })
-  })
-})
-
-app.post("/api/agregarHorarioAVivero",async(req,res) =>{
-  const nombre: string = req.body.nombreVivero;
-  const inicio: string = req.body.horaInicio;
-  const final: string = req.body.horaFin;
-  const dias: string = req.body.dias;
-
-  const query: string = 
-  `
-  SELECT spAgregarHorario('${nombre}','${inicio}','${final}','${dias}') as success;
+  SELECT spAgregarVivero('${nombre}','${direccion}','${telefonos}','${horarios}') as success;
   `;
   
   pool_plants.connect((err, client, release) => {
@@ -430,7 +376,7 @@ app.post("/api/getInfoVivero",async(req,res) =>{
 
   const query: string = 
   `
-  SELECT spGetInfoVivero('${nombreVivero}') as success;
+  SELECT nombre, direccion, telefonos, horarios from spGetInfoVivero('${nombreVivero}');
   `;
   
   pool_plants.connect((err, client, release) => {
@@ -445,68 +391,16 @@ app.post("/api/getInfoVivero",async(req,res) =>{
         res.sendStatus(500);
         return console.error('Error executing query', err.stack)
       }
-      res.status(200).send(result.rows[0]);
+      res.status(200).send({"info":result.rows[0]});
       
     })
   })
 })
 
-app.post("/api/getTelefonosVivero",async(req,res) =>{
-  const nombreVivero: string = req.body.nombreVivero;
-
+app.get("/api/listViveros",async(_req,res) =>{
   const query: string = 
   `
-  SELECT telefono FROM spGetTelefonosVivero('${nombreVivero}') as success;
-  `;
-  
-  pool_plants.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-      res.status(200).send({"telefonos":result.rows});
-      
-    })
-  })
-})
-
-app.post("/api/getHorariosVivero",async(req,res) =>{
-  const nombreVivero: string = req.body.nombreVivero;
-
-  const query: string = 
-  `
-  SELECT horaInicio,horaFin,dias FROM spGetHorarioVivero('${nombreVivero}');
-  `;
-  
-  pool_plants.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-      res.status(200).send({"horarios":result.rows});
-      
-    })
-  })
-})
-
-app.get("/api/listViveros",async(req,res) =>{
-  const query: string = 
-  `
-  SELECT nombre, direccion FROM spListViveros();
+  SELECT nombre, direccion, telefonos, horarios FROM spListViveros();
   `;
   
   pool_plants.connect((err, client, release) => {
