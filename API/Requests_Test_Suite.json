@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "f6aba705-c1c2-4dbf-9796-b338b30ddd96",
+		"name": "Requests api siembrapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Administrador\",\r\n    \"correo\": \"admin@siembrapp.com\",\r\n    \"contrasenna\": \"admin\",\r\n    \"tipoOrganizacion\": \"Otro\",\r\n    \"razon\": \"Otro\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/register_user",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"register_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar familia",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"familia\": \"pruebaFamilia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/agregar_familia",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"agregar_familia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar Fenologia",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fenologia\": \"pruebaFenologia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/agregar_fenologia",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"agregar_fenologia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar agentepolinizador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"agentepolinizador\": \"pruebaAgentepolinizador\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/agregar_agentepolinizador",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"agregar_agentepolinizador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar metododispersion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"metododispersion\": \"pruebaMetododispersion\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/agregar_metododispersion",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"agregar_metododispersion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar planta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombreComun\": \"saragundi2\",\r\n    \"nombreCientifico\": \"senna reticulata2\",\r\n    \"origen\": \"nativa2\",\r\n    \"minRangoAltitudinal\": \"10\",\r\n    \"maxRangoAltitudinal\": \"40\",\r\n    \"metros\": \"1000\",\r\n    \"requerimientosDeLuz\": \"No requiere luz\",\r\n    \"habito\": \"ARB de 10 a 15m de altura y de <= 10cm de diametro\",\r\n    \"familia\": \"Fabaceae\",\r\n    \"fenologia\": \"Caducifolio\",\r\n    \"agentePolinizador\": \"Insectos\",\r\n    \"metodoDispersion\": \"Autocoria\",\r\n    \"frutos\": \"Legumbre\",\r\n    \"texturaFruto\": \"Seco\",\r\n    \"flor\": \"Amarilla\",\r\n    \"usosConocidos\": \"Sin usos conocidos\",\r\n    \"paisajeRecomendado\": \"TNN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/agregar_planta",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"agregar_planta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correo\": \"admin@siembrapp.com\",\r\n  \"contrasenna\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"correo\":\"admin@siembrapp.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/getUserInfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"getUserInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getidbyuuid",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"uuid\":\"ff1a141b-4487-46a5-92f2-f2005b173b6b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/getid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"getid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar vivero",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombreVivero\":\"FUNDAZOO\",\r\n    \"direccion\":\"Calle Ross De la Cruz Roja de Santa Ana 300 metros oeste y 200 metros norte, San José, Santa Ana\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/agregarVivero",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"agregarVivero"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Info Vivero",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombreVivero\": \"FUNDAZOO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/getInfoVivero",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"getInfoVivero"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Ver plantas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/ver_plantas/*",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ver_plantas",
+								"*"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Viveros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/listViveros",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"listViveros"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
