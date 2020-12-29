@@ -1,5 +1,7 @@
 SET timezone = 'America/Costa_Rica';
 
+DROP TABLE Viveros;
+
 -- Crear tabla de viveros
 CREATE TABLE Viveros(
 
@@ -72,6 +74,13 @@ $$ LANGUAGE PLPGSQL;
 	'2282 8434',
 	'8:00 - 15:30 (Lunes - Viernes)
 	9:00 - 16:30 (Sábados y domingos)')
+	as success;
+	select * from Viveros;
+	
+	select spAgregarVivero('Vivero Forestal ITCR',
+	'Instituto Tecnológico de Costa Rica, Cartago',
+	'2550 2326',
+	'NO INDICA')
 	as success;
 	select * from Viveros;
 */
