@@ -31,7 +31,7 @@ $$
 	
 	DECLARE
 		
-		idViveroLookup BIGINT := (SELECT V.idVivero FROM Viveros V WHERE LOWER(V.nombre) LIKE LOWER(nombreInput) and V.borrado = FALSE);
+		idViveroLookup BIGINT := (SELECT V.idVivero FROM Viveros V WHERE LOWER(V.nombre) LIKE LOWER(nombreInput));
 		borradoLookup BOOLEAN := (SELECT V.borrado FROM Viveros V WHERE idViveroLookup = V.idVivero);
 		
 	BEGIN
@@ -80,6 +80,13 @@ $$ LANGUAGE PLPGSQL;
 	select spAgregarVivero('Vivero Forestal ITCR',
 	'Instituto Tecnológico de Costa Rica, Cartago',
 	'2550 2326',
+	'NO INDICA')
+	as success;
+	select * from Viveros;
+	
+	select spAgregarVivero('Vivero Procesa',
+	'Tres Ríos',
+	'NO INDICA',
 	'NO INDICA')
 	as success;
 	select * from Viveros;
@@ -194,5 +201,6 @@ $$ LANGUAGE PLPGSQL;
 
 /*
 select spEliminarVivero('Vivero Procesa') as success;
+
 select * from viveros;
 */
