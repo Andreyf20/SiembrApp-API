@@ -453,6 +453,31 @@ app.post("/api/actualizarInfoVivero",async(req,res) =>{
   })
 })
 
+app.post("/api/eliminarVivero",async(req,res) =>{
+  
+  const nombre = req.body.nombre;
+
+  const query: string = 
+  
+  `SELECT spEliminarVivero('${nombre}') as success;`;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send(result.rows[0]);
+    })
+  })
+})
+
 // Execute
 
 var port = 5000;
