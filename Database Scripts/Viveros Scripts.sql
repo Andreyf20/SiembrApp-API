@@ -148,7 +148,7 @@ $$
 			
 			UPDATE Viveros SET
 
-				direccion = direccionInput,
+				direccion = direccionNuevaInput,
 				telefonos = telefonosInput,
 				horarios = horariosInput,
 				borrado = FALSE,
@@ -162,3 +162,8 @@ $$
 	END;
 
 $$ LANGUAGE PLPGSQL;
+
+/*
+select spModificarVivero('Vivero Forestal ITCR','Instituto Tecnológico de Costa Rica, Cartago','2550 2326','7:00 15:30 (Lunes a Viernes)') as success;
+select * from viveros;
+*/
