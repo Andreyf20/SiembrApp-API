@@ -12,7 +12,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 
-
+// Usuario
 app.post("/api/login",async(req,res) =>{
   const correo: string = req.body.correo;
 
@@ -40,7 +40,6 @@ app.post("/api/login",async(req,res) =>{
     })
   })
 })
-
 
 app.post("/api/getUserInfo",async(req,res) =>{
   const correo: string = req.body.correo;
@@ -88,29 +87,6 @@ app.post("/api/getid",async(req,res) =>{
   })
 })
 
-app.get("/api/ver_plantas/:filtro",async(req,res) =>{
-  const filtro: string = req.params.filtro;
-
-  const query: string = `select * from spverplantas('${filtro}')`;
-  
-  pool_plants.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-
-      res.status(200).send(JSON.stringify(result.rows));
-    })
-  })
-})
-
 app.post("/api/register_user",async(req,res) =>{
 
   const user: User = new User(req.body.nombre, req.body.correo, hash_sp_password(req.body.contrasenna), req.body.tipoOrganizacion,req.body.razon,req.body.admin);
@@ -138,6 +114,31 @@ app.post("/api/register_user",async(req,res) =>{
       
       if(result.rows[0].spcrearusuario === true) res.status(200).send({'ok': '1'});
       else res.status(200).send({'ok': '0'});
+    })
+  })
+})
+
+// Plantas
+
+app.get("/api/ver_plantas/:filtro",async(req,res) =>{
+  const filtro: string = req.params.filtro;
+
+  const query: string = `select * from spverplantas('${filtro}')`;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+
+      res.status(200).send(JSON.stringify(result.rows));
     })
   })
 })
@@ -343,6 +344,8 @@ app.post("/api/getPlantasDeUsuario",async(req,res) =>{
 })
 
 
+// Viveros
+
 app.post("/api/agregarVivero",async(req,res) =>{
   const nombre: string = req.body.nombreVivero;
   const direccion: string = req.body.direccion;
@@ -421,6 +424,36 @@ app.get("/api/listViveros",async(_req,res) =>{
     })
   })
 })
+
+app.post("/api/actualizarInfoVivero",async(req,res) =>{
+  
+  const nombre = req.body.nombre;
+  const direccion = req.body.direccion;
+  const telefonos = req.body.telefonos;
+  const horarios = req.body.horarios;
+
+  const query: string = 
+  
+  `SELECT spModificarVivero(${nombre},${direccion}, ${telefonos}, ${horarios}) as success;`;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send(result.rows[0]);
+    })
+  })
+})
+
+// Execute
 
 var port = 5000;
 
