@@ -42,11 +42,11 @@ $$
 		
 				UPDATE Viveros
 					SET
-					direccion = direccionInput,
-					telefonos = telefonosInput,
-					horarios = horariosInput,
-					borrado = FALSE,
-					ultimaActualizacion = NOW() WHERE idViveroLookup = Viveros.idVivero;
+						direccion = direccionInput,
+						telefonos = telefonosInput,
+						horarios = horariosInput,
+						borrado = FALSE,
+						ultimaActualizacion = NOW() WHERE idViveroLookup = Viveros.idVivero;
 					
 					RETURN TRUE;	
 			ELSE 
@@ -147,11 +147,8 @@ $$
 		IF idViveroLookup IS NOT NULL THEN
 			
 			UPDATE Viveros SET
-
-				direccion = direccionNuevaInput,
-				telefonos = telefonosInput,
-				horarios = horariosInput,
-				borrado = FALSE,
+			
+				borrado = TRUE,
 				ultimaActualizacion = NOW() WHERE idViveroLookup = Viveros.idVivero;
 
 			RETURN TRUE;
@@ -165,5 +162,37 @@ $$ LANGUAGE PLPGSQL;
 
 /*
 select spModificarVivero('Vivero Forestal ITCR','Instituto Tecnológico de Costa Rica, Cartago','2550 2326','7:00 15:30 (Lunes a Viernes)') as success;
+select * from viveros;
+*/
+
+CREATE OR REPLACE FUNCTION spEliminarVivero(
+	nombreViveroInput varchar
+) RETURNS BOOLEAN
+AS
+$$
+
+	DECLARE 
+
+		idViveroLookup BIGINT := (SELECT V.idVivero FROM Viveros V WHERE LOWER(V.nombre) LIKE LOWER(nombreViveroInput) and V.borrado = FALSE);
+
+	BEGIN
+	
+		IF idViveroLookup IS NOT NULL THEN
+			
+			UPDATE Viveros SET
+			
+				borrado = TRUE,
+				ultimaActualizacion = NOW() WHERE idViveroLookup = Viveros.idVivero;
+
+			RETURN TRUE;
+		ELSE
+			RETURN FALSE;
+		END IF;
+		
+	END;
+$$ LANGUAGE PLPGSQL;
+
+/*
+select spEliminarVivero('Vivero Procesa') as success;
 select * from viveros;
 */
