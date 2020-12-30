@@ -434,7 +434,7 @@ app.post("/api/actualizarInfoVivero",async(req,res) =>{
 
   const query: string = 
   
-  `SELECT spModificarVivero(${nombre},${direccion}, ${telefonos}, ${horarios}) as success;`;
+  `SELECT spModificarVivero('${nombre}','${direccion}','${telefonos}','${horarios}') as success;`;
   
   pool_plants.connect((err, client, release) => {
     if (err) {
