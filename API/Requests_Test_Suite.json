@@ -269,7 +269,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombreVivero\":\"FUNDAZOO\",\r\n    \"direccion\":\"Calle Ross De la Cruz Roja de Santa Ana 300 metros oeste y 200 metros norte, San José, Santa Ana\"\r\n}",
+							"raw": "{\r\n    \"nombreVivero\":\"FUNDAZOO\",\r\n    \"direccion\":\"Calle Ross De la Cruz Roja de Santa Ana 300 metros oeste y 200 metros norte, San José, Santa Ana\",\r\n    \"telefonos\": \"2282 8434\",\r\n    \"horarios\": \"8:00 - 15:30 (Lunes - Viernes)\\n9:00 - 16:30 (Sábados y domingos)\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -318,6 +318,62 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Actualizar Info de Vivero",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Vivero Procesa\",\r\n    \"direccion\": \"Tres Ríos\",\r\n    \"telefonos\":\"1234 5678\",\r\n    \"horarios\": \"NO INDICA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/actualizarInfoVivero",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"actualizarInfoVivero"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Vivero",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"FUNDAZOO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/eliminarVivero",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"eliminarVivero"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -358,6 +414,82 @@
 							"path": [
 								"api",
 								"listViveros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Familias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/listFamilias",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"listFamilias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Fenologias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/listFenologias",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"listFenologias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Metodos Dispersion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/listMetodosDispersion",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"listMetodosDispersion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Agente Polinizador",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/listAgentePolinizador",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"listAgentePolinizador"
 							]
 						}
 					},

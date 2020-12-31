@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // Usuario
+
 app.post("/api/login",async(req,res) =>{
   const correo: string = req.body.correo;
 
@@ -117,6 +118,106 @@ app.post("/api/register_user",async(req,res) =>{
     })
   })
 })
+
+
+// Familia
+
+app.get("/api/listFamilias",async(_req,res) =>{
+  const query: string = 
+  `
+  SELECT nombre from spgetfamilias();
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send({"familias":result.rows});
+    })
+  })
+})
+
+// Fenologia
+app.get("/api/listFenologias",async(_req,res) =>{
+  const query: string = 
+  `
+  SELECT nombre from spgetfenologias();
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send({"fenologias":result.rows});
+    })
+  })
+})
+
+// Metodo de dispersion
+app.get("/api/listMetodosDispersion",async(_req,res) =>{
+  const query: string = 
+  `
+  SELECT nombre from spgetmetodosdispersion();
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send({"fenologias":result.rows});
+    })
+  })
+})
+
+// Agente polinizador
+
+app.get("/api/listAgentePolinizador",async(_req,res) =>{
+  const query: string = 
+  `
+  SELECT nombre from spgetagentespolinizadores();
+  `;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send({"fenologias":result.rows});
+    })
+  })
+})
+
 
 // Plantas
 
