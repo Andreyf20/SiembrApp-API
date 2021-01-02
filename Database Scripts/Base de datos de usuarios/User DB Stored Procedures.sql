@@ -142,9 +142,52 @@ RETURNS BOOLEAN AS $$
 	END;
 $$ LANGUAGE PLPGSQL;
 
-select spCrearTipoOrganizacion('Asada') as success;
-select spCrearTipoOrganizacion('Estado') as success;
-select spCrearTipoOrganizacion('Gobierno local') as success;
-select spCrearTipoOrganizacion('ONG') as success;
-select spCrearTipoOrganizacion('Otro') as success;
-select * from TipoOrganizacion;
+-- select spCrearTipoOrganizacion('Asada') as success;
+-- select spCrearTipoOrganizacion('Estado') as success;
+-- select spCrearTipoOrganizacion('Gobierno local') as success;
+-- select spCrearTipoOrganizacion('ONG') as success;
+-- select spCrearTipoOrganizacion('Otro') as success;
+-- select * from TipoOrganizacion;
+
+drop function if exists spUpdateUsuario;
+
+CREATE OR REPLACE FUNCTION spUpdateUsuario(
+    nombreInput varchar,
+    correoInput varchar,
+	tipoOrganizacionInput varchar,
+	usuario_uidInput varchar
+)
+RETURNS BOOLEAN
+AS $$
+
+    DECLARE
+        idUsuarioBuscado BIGINT := (SELECT U.idUsuario FROM Users U WHERE U.usuario_uid::varchar LIKE usuario_uidInput);
+		_idTipoOrganizacion BIGINT := (SELECT T.idTipoOrganizacion FROM TipoOrganizacion T WHERE T.nombre LIKE tipoOrganizacionInput);
+		correoRepetido BOOLEAN := (select
+									case when exists (SELECT 1 FROM Users U WHERE U.correo LIKE correoInput LIMIT 1)
+										then TRUE
+										else FALSE
+									end);
+    BEGIN
+
+        IF idUsuarioBuscado IS NOT NULL THEN
+            
+            IF ((SELECT U.borrado FROM Users U WHERE U.idUsuario = idUsuarioBuscado) = True) 
+			OR correoRepetido THEN
+				RETURN FALSE;
+            ELSE	
+				UPDATE Users U SET
+					nombre = nombreInput,
+					correo = correoInput,
+					idtipoorganizacion = _idTipoOrganizacion,
+					ultimaActualizacion = NOW()
+					WHERE U.idUsuario = idUsuarioBuscado;
+			END IF;
+            RETURN TRUE;
+        ELSE
+			RETURN FALSE;
+        END IF;
+    END;
+$$ LANGUAGE PLPGSQL;
+
+select spUpdateUsuario('XD', 'xd3@gmail.com', 'ONG', '860f39d0-6ee6-47a9-a34f-0e449b8bd477') as success;
