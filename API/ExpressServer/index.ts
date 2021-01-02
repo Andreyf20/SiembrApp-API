@@ -589,46 +589,30 @@ app.post("/api/update_user",async(req,res) =>{
     uuid: req.body.uuid
   };
 
-  // const query: string = `select spagregarplanta(
-  //   '${planta.nombreComun}' :: varchar,
-  //   '${planta.nombreCientifico}' :: varchar,
-  //   '${planta.origen}' :: varchar,
-  //   ${planta.minRangoAltitudinal},
-  //   ${planta.maxRangoAltitudinal},
-  //   ${planta.metros},
-  //   '${planta.requerimientosDeLuz}' :: varchar,
-  //   '${planta.habito}' :: varchar,
-  //   '${planta.familia}' :: varchar,
-  //   '${planta.fenologia}' :: varchar,
-  //   '${planta.agentePolinizador}' :: varchar,
-  //   '${planta.metodoDispersion}' :: varchar,
-  //   '${planta.frutos}' :: varchar,
-  //   '${planta.texturaFruto}' :: varchar,
-  //   '${planta.flor}' :: varchar,
-  //   '${planta.usosConocidos}' :: varchar,
-  //   '${planta.paisajeRecomendado}' :: varchar);`;
+  const query: string = `select spUpdateUsuario(
+    '${jsonConf.nombre}' :: varchar,
+    '${jsonConf.email}' :: varchar,
+    '${jsonConf.TipoOrganizacion}' :: varchar,
+    '${jsonConf.uuid}' :: varchar);`;
 
-  // pool_users.connect((err, client, release) => {
-  //   if (err) {
-  //     res.sendStatus(500);
-  //     return console.error('Error acquiring client', err.stack)
-  //   }
+  pool_users.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
     
-  //   client.query(query, (err, result) => {
-  //     release()
-  //     if (err) {
-  //       res.sendStatus(500);
-  //       return console.error('Error executing query', err.stack)
-  //     }
-      
-  //     if(result.rows[0].spagregarplanta === true) res.status(200).send({'ok': '1'});
-  //     else res.status(200).send({'ok': '0'});
-  //   })
-  // })
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
 
-  console.log(jsonConf);
-  res.status(200).send({'ok': '1'})
-  
+      if(result.rows[0].spupdateusuario === true) res.status(200).send({'ok': '1'});
+      else res.status(200).send({'ok': '0'});
+    })
+  })
+
 })
 
 var port = 5000;
