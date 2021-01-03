@@ -145,6 +145,31 @@ app.get("/api/listFamilias",async(_req,res) =>{
   })
 })
 
+app.post("/api/agregar_familia",async(req,res) =>{
+  const familia: string = req.body.familia
+
+  const query: string = `select spagregarfamilia(
+    '${familia}' :: varchar);`;
+
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      
+      if(result.rows[0].spagregarfamilia === true) res.status(200).send({'ok': '1'});
+      else res.status(200).send({'ok': '0'});
+    })
+  })
+})
+
 // Fenologia
 app.get("/api/listFenologias",async(_req,res) =>{
   const query: string = 
@@ -169,6 +194,32 @@ app.get("/api/listFenologias",async(_req,res) =>{
   })
 })
 
+app.post("/api/agregar_fenologia",async(req,res) =>{
+  const fenologia: string = req.body.fenologia
+
+  const query: string = `select spagregarfenologia(
+    '${fenologia}' :: varchar);`;
+
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      
+      if(result.rows[0].spagregarfenologia === true) res.status(200).send({'ok': '1'});
+      else res.status(200).send({'ok': '0'});
+    })
+  })
+})
+
+
 // Metodo de dispersion
 app.get("/api/listMetodosDispersion",async(_req,res) =>{
   const query: string = 
@@ -188,7 +239,32 @@ app.get("/api/listMetodosDispersion",async(_req,res) =>{
         res.sendStatus(500);
         return console.error('Error executing query', err.stack)
       }
-      res.status(200).send({"fenologias":result.rows});
+      res.status(200).send({"metodosdispersion":result.rows});
+    })
+  })
+})
+
+app.post("/api/agregar_metododispersion",async(req,res) =>{
+  const metododispersion: string = req.body.metododispersion
+
+  const query: string = `select spagregarmetododispersion(
+    '${metododispersion}' :: varchar);`;
+
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      
+      if(result.rows[0].spagregarmetododispersion === true) res.status(200).send({'ok': '1'});
+      else res.status(200).send({'ok': '0'});
     })
   })
 })
@@ -213,7 +289,32 @@ app.get("/api/listAgentePolinizador",async(_req,res) =>{
         res.sendStatus(500);
         return console.error('Error executing query', err.stack)
       }
-      res.status(200).send({"fenologias":result.rows});
+      res.status(200).send({"agentes":result.rows});
+    })
+  })
+})
+
+app.post("/api/agregar_agentepolinizador",async(req,res) =>{
+  const agentepolinizador: string = req.body.agentepolinizador
+
+  const query: string = `select spagregaragentepolinizador(
+    '${agentepolinizador}' :: varchar);`;
+
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      
+      if(result.rows[0].spagregaragentepolinizador === true) res.status(200).send({'ok': '1'});
+      else res.status(200).send({'ok': '0'});
     })
   })
 })
@@ -244,106 +345,6 @@ app.get("/api/ver_plantas/:filtro",async(req,res) =>{
   })
 })
 
-app.post("/api/agregar_familia",async(req,res) =>{
-  const familia: string = req.body.familia
-
-  const query: string = `select spagregarfamilia(
-    '${familia}' :: varchar);`;
-
-  pool_plants.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-      
-      if(result.rows[0].spagregarfamilia === true) res.status(200).send({'ok': '1'});
-      else res.status(200).send({'ok': '0'});
-    })
-  })
-})
-
-app.post("/api/agregar_fenologia",async(req,res) =>{
-  const fenologia: string = req.body.fenologia
-
-  const query: string = `select spagregarfenologia(
-    '${fenologia}' :: varchar);`;
-
-  pool_plants.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-      
-      if(result.rows[0].spagregarfenologia === true) res.status(200).send({'ok': '1'});
-      else res.status(200).send({'ok': '0'});
-    })
-  })
-})
-
-app.post("/api/agregar_agentepolinizador",async(req,res) =>{
-  const agentepolinizador: string = req.body.agentepolinizador
-
-  const query: string = `select spagregaragentepolinizador(
-    '${agentepolinizador}' :: varchar);`;
-
-  pool_plants.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-      
-      if(result.rows[0].spagregaragentepolinizador === true) res.status(200).send({'ok': '1'});
-      else res.status(200).send({'ok': '0'});
-    })
-  })
-})
-
-app.post("/api/agregar_metododispersion",async(req,res) =>{
-  const metododispersion: string = req.body.metododispersion
-
-  const query: string = `select spagregarmetododispersion(
-    '${metododispersion}' :: varchar);`;
-
-  pool_plants.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-      
-      if(result.rows[0].spagregarmetododispersion === true) res.status(200).send({'ok': '1'});
-      else res.status(200).send({'ok': '0'});
-    })
-  })
-})
-
 app.post("/api/agregar_planta",async(req,res) =>{
   const planta: Plant = new Plant(
     req.body.nombreComun,
@@ -351,8 +352,8 @@ app.post("/api/agregar_planta",async(req,res) =>{
     req.body.origen,
     parseInt(req.body.minRangoAltitudinal),
     parseInt(req.body.maxRangoAltitudinal),
-    parseInt(req.body.metros), 
-    req.body.requerimientosDeLuz, 
+    parseInt(req.body.metros),
+    req.body.requerimientosDeLuz,
     req.body.habito, 
     req.body.familia, 
     req.body.fenologia, 
