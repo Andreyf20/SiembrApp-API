@@ -1,4 +1,4 @@
-
+DROP TABLE IF EXISTS plantasxusuario;
 DROP TABLE IF EXISTS plantas;
 DROP TABLE IF EXISTS familia;
 DROP TABLE IF EXISTS fenologia;
