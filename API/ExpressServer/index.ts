@@ -445,6 +445,63 @@ app.post("/api/getPlantasDeUsuario",async(req,res) =>{
   })
 })
 
+app.post("/api/modificar_planta",async(req,res) =>{
+  const planta: Plant = new Plant(
+    req.body.nombreComun,
+    req.body.nombreCientifico,
+    req.body.origen,
+    parseInt(req.body.minRangoAltitudinal),
+    parseInt(req.body.maxRangoAltitudinal),
+    parseInt(req.body.metros),
+    req.body.requerimientosDeLuz,
+    req.body.habito, 
+    req.body.familia, 
+    req.body.fenologia, 
+    req.body.agentePolinizador, 
+    req.body.metodoDispersion, 
+    req.body.frutos, 
+    req.body.texturaFruto, 
+    req.body.flor, 
+    req.body.usosConocidos, 
+    req.body.paisajeRecomendado);
+
+  const query: string = `select spmodificarplanta(
+    '${planta.nombreComun}',
+    '${planta.nombreCientifico}',
+    '${planta.origen}' ,
+    ${planta.minRangoAltitudinal},
+    ${planta.maxRangoAltitudinal},
+    ${planta.metros},
+    '${planta.requerimientosDeLuz}',
+    '${planta.habito}',
+    '${planta.familia}',
+    '${planta.fenologia}',
+    '${planta.agentePolinizador}',
+    '${planta.metodoDispersion}',
+    '${planta.frutos}',
+    '${planta.texturaFruto}',
+    '${planta.flor}',
+    '${planta.usosConocidos}',
+    '${planta.paisajeRecomendado}' );`;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      
+      if(result.rows[0].spmodificarplanta === true) res.status(200).send({'ok': '1'});
+      else res.status(200).send({'ok': '0'});
+    })
+  })
+})
 
 // Viveros
 
