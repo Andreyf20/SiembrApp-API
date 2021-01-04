@@ -503,6 +503,31 @@ app.post("/api/modificar_planta",async(req,res) =>{
   })
 })
 
+app.post("/api/eliminar_planta",async(req,res) =>{
+  
+  const nombreComun = req.body.nombreComun;
+
+  const query: string = 
+  
+  `select spEliminarPlanta('${nombreComun}') as success;`;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      res.status(200).send(result.rows[0]);
+    })
+  })
+})
+
 // Viveros
 
 app.post("/api/agregarVivero",async(req,res) =>{
