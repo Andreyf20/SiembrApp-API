@@ -345,6 +345,15 @@ app.get("/api/ver_plantas/:filtro",async(req,res) =>{
   })
 })
 
+// REF: https://stackoverflow.com/questions/9229645/remove-duplicate-values-from-js-array
+function uniqBy(a, key) {
+  var seen = {};
+  return a.filter(function(item) {
+      var k = key(item);
+      return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+  })
+}
+
 function get_plantas_filtros(index: number, max: number, filtros: string[], results, req, res){
   const query: string = `select * from spverplantas('${filtros[index]}')`;
   
@@ -365,7 +374,10 @@ function get_plantas_filtros(index: number, max: number, filtros: string[], resu
           }
           
           index = index + 1;
-          if(index >= max) res.status(200).send(JSON.stringify(results));
+          if(index >= max) {
+            results = uniqBy(results, JSON.stringify)
+            res.status(200).send(JSON.stringify(results));
+          }
           else {
             get_plantas_filtros(index, max, filtros, results, req, res);
           }
@@ -377,10 +389,8 @@ function get_plantas_filtros(index: number, max: number, filtros: string[], resu
 
 app.post("/api/ver_plantas/", async (req,res) =>{
   const filtros: string[] = req.body.filtros;
-  console.log(filtros);
 
   get_plantas_filtros(0, filtros.length, filtros, [], req, res);
-    
 })
 
 app.post("/api/agregar_planta",async(req,res) =>{
