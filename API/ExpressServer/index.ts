@@ -345,6 +345,44 @@ app.get("/api/ver_plantas/:filtro",async(req,res) =>{
   })
 })
 
+function get_plantas_filtros(index: number, max: number, filtros: string[], results, req, res){
+  const query: string = `select * from spverplantas('${filtros[index]}')`;
+  
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack);
+    } else{
+      client.query(query, (err, result) => {
+        release()
+        if (err) {
+          res.sendStatus(500);
+          return console.error('Error executing query', err.stack);
+        }else{
+          for (let i = 0; i < result.rows.length; i++) {
+            const element = result.rows[i];
+            results.push(element);
+          }
+          
+          index = index + 1;
+          if(index >= max) res.status(200).send(JSON.stringify(results));
+          else {
+            get_plantas_filtros(index, max, filtros, results, req, res);
+          }
+        }   
+      })
+    }
+  })
+}
+
+app.post("/api/ver_plantas/", async (req,res) =>{
+  const filtros: string[] = req.body.filtros;
+  console.log(filtros);
+
+  get_plantas_filtros(0, filtros.length, filtros, [], req, res);
+    
+})
+
 app.post("/api/agregar_planta",async(req,res) =>{
   const planta: Plant = new Plant(
     req.body.nombreComun,
