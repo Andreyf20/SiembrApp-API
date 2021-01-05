@@ -359,13 +359,13 @@ function get_plantas_filtros(index: number, max: number, filtros: string[], resu
   
   pool_plants.connect((err, client, release) => {
     if (err) {
-      res.sendStatus(500);
+      res.status(500).send({"ok": 0});
       return console.error('Error acquiring client', err.stack);
     } else{
       client.query(query, (err, result) => {
         release()
         if (err) {
-          res.sendStatus(500);
+          res.status(500).send({"ok": 0});
           return console.error('Error executing query', err.stack);
         }else{
           for (let i = 0; i < result.rows.length; i++) {
@@ -376,6 +376,10 @@ function get_plantas_filtros(index: number, max: number, filtros: string[], resu
           index = index + 1;
           if(index >= max) {
             results = uniqBy(results, JSON.stringify)
+            results = {
+              "ok": 1,
+              "results": results
+            }
             res.status(200).send(JSON.stringify(results));
           }
           else {
