@@ -750,6 +750,8 @@ app.post("/api/update_user",async(req,res) =>{
 
 })
 
-var port = 5000;
+// Heroku, asigna puertos dinámicos
+// Ref: https://stackoverflow.com/a/15693371
 
-app.listen(port, () => console.log(`Api listening on port ${port}!`))
+var port = 5000;
+app.listen(process.env.PORT || port, () => console.log(`Api listening on port ${port}!`))
