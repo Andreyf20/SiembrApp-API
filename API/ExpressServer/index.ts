@@ -754,4 +754,4 @@ app.post("/api/update_user",async(req,res) =>{
 // Ref: https://stackoverflow.com/a/15693371
 
 var port = 5000;
-app.listen(process.env.PORT || port, () => console.log(`Api listening on port ${port}!`))
+app.listen(process.env.PORT || port, () => console.log(`Api listening on port ${process.env.PORT || port}!`))
