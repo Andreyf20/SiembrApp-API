@@ -93,10 +93,10 @@ AS $$
                 borrado
             )
             VALUES(
-                idFamilia,
-                idFenologia,
-                idAgentePolinizador,
-                idMetodoDispersion,
+                idFamiliaLookup,
+                idFenologiaLookup,
+                idAgentePolinizadorLookup,
+                idMetodoDispersionLookup,
 
                 nombreComunInput,
                 nombreCientificoInput,
@@ -162,6 +162,28 @@ $$ LANGUAGE PLPGSQL;
         'Blanco - crema',
         'Ornamental, Medicinal, frutal comestible',
         'CBIMA, PILA'
+
+    ) as success;
+    select * from plantas;
+	
+	select spAgregarPlanta(
+        'Guanábano',
+        'Annona muricata',
+        'Nativa',
+        400,
+        600,
+        1000,
+        'Mucha luz constantemente',
+        'Árbol pequeño, de 3-8 m de altura',
+        'Annonaceae',
+        'Perennefolio',
+        'Insectos',
+        'Zoocoria',
+        'Guanábana',
+        'Espinoso',
+        'Blanco - crema',
+        'frutal comestible',
+        'No indica'
 
     ) as success;
     select * from plantas;
