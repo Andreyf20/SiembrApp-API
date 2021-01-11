@@ -53,7 +53,8 @@ RETURNS TABLE(
             texturaFruto varchar,
             flor varchar,
             usosConocidos varchar,
-            paisajeRecomendado varchar
+            paisajeRecomendado varchar,
+            imagen TEXT
 )
 AS $$
 
@@ -79,7 +80,8 @@ AS $$
                 P.texturaFruto,
                 P.flor,
                 P.usosConocidos,
-                P.paisajeRecomendado
+                P.paisajeRecomendado,
+                P.imagen
 
                 FROM plantasXusuario PXU
 				INNER JOIN plantas P ON PXU.idplanta = P.idplanta

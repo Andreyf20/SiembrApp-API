@@ -17,7 +17,8 @@ RETURNS TABLE(
             texturaFruto varchar,
             flor varchar,
             usosConocidos varchar,
-            paisajeRecomendado varchar
+            paisajeRecomendado varchar,
+            imagen TEXT
 )
 AS
 $$
@@ -46,7 +47,8 @@ $$
                 P.texturaFruto,
                 P.flor,
                 P.usosConocidos,
-                P.paisajeRecomendado
+                P.paisajeRecomendado,
+                P.imagen
 
                 FROM plantas P
                 LEFT JOIN familia F ON P.idFamilia = F.idFamilia
@@ -75,7 +77,8 @@ $$
                 P.texturaFruto,
                 P.flor,
                 P.usosConocidos,
-                P.paisajeRecomendado
+                P.paisajeRecomendado,
+                P.imagen
 
                 FROM plantas P
                 LEFT JOIN familia F ON P.idFamilia = F.idFamilia
