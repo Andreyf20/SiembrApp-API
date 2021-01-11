@@ -73,6 +73,7 @@ CREATE TABLE public.plantas(
 
     usosConocidos varchar(1024) NOT NULL,
     paisajeRecomendado varchar(1024) NOT NULL,
+    imagen TEXT NOT NULL,
 
     -- Mantenimineto
     ultimaActualizacion TIMESTAMP NOT NULL,
