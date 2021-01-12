@@ -10,15 +10,27 @@ AS $$
 	DECLARE 
 	
 		idPlantaLookup BIGINT := (SELECT P.idPlanta FROM plantas P WHERE LOWER(nombrePlantaCientificaInput) LIKE LOWER(P.nombreCientifico));
-	
+        idPxU BIGINT := (select
+                        case when idPlantaLookup is not null
+                        then (select 1 from plantasxusuario PXU where PXU.iduser = userIdInput and PXU.idPlanta = idPlantaLookup)
+                        else -1
+                        end);
 	BEGIN
 		
 		IF idPlantaLookup IS NOT NULL THEN
+
+            if idPxU != -1 then
+                UPDATE plantasxusuario
+                set ultimaActualizacion = NOW(),
+                    borrado = not borrado
+                where idplantaxusuario = idPxU;
+
+            else
+                INSERT INTO plantasXusuario(idPlanta,idUser,ultimaActualizacion,borrado)
+                VALUES (idPlantaLookup,userIdInput,NOW(),FALSE);
+            end if;
 		
-			INSERT INTO plantasXusuario(idPlanta,idUser,ultimaActualizacion,borrado)
-			VALUES (idPlantaLookup,userIdInput,NOW(),FALSE);
-			RETURN TRUE;
-			
+            RETURN TRUE;
 		ELSE
 			
 			RETURN FALSE;
