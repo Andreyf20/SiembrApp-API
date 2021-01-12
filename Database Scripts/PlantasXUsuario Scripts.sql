@@ -12,7 +12,7 @@ AS $$
 		idPlantaLookup BIGINT := (SELECT P.idPlanta FROM plantas P WHERE LOWER(nombrePlantaCientificaInput) LIKE LOWER(P.nombreCientifico));
         idPxU BIGINT := (select
                         case when idPlantaLookup is not null
-                        then (select 1 from plantasxusuario PXU where PXU.iduser = userIdInput and PXU.idPlanta = idPlantaLookup)
+                        then (select idplantaxusuario from plantasxusuario PXU where PXU.iduser = userIdInput and PXU.idPlanta = idPlantaLookup)
                         else -1
                         end);
 	BEGIN
