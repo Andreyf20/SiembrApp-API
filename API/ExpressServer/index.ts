@@ -12,6 +12,28 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 
+app.get("/api/ping_plantas",async(req,res) =>{
+  let query = `select * from plantas limit 10;`
+
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+
+      if(result.rowCount > 0) res.status(200).send({'ok': '1'});
+      else res.status(200).send({'ok': '0'});
+    })
+  })
+})
+
 // Usuario
 
 app.post("/api/login",async(req,res) =>{
