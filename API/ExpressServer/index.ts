@@ -141,6 +141,111 @@ app.post("/api/register_user",async(req,res) =>{
   })
 })
 
+app.post("/api/getPlantasDeUsuario",async(req,res) =>{
+  const id: string = req.body.id;
+
+  const query: string = `SELECT 
+                familia,
+                fenologia,
+                polinizador,
+                metododispersion,
+                nombrecomun,
+                nombrecientifico,
+                origen,
+                minRangoaltitudinal,
+                maxRangoaltitudinal,
+                metros,
+                requerimientosdeluz,
+                habito,
+                frutos,
+                texturafruto,
+                flor,
+                usosconocidos,
+                paisajerecomendado,
+                imagen
+                from spGetPlantasXUsuario(${id})`;
+
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+      
+      res.status(200).send({"plantas":result.rows});
+      
+    })
+  })
+})
+
+app.post("/api/update_user",async(req,res) =>{
+  const jsonConf = {
+    email: req.body.correo,
+    nombre: req.body.nombre,
+    TipoOrganizacion: req.body.tipoOrganizacion,
+    uuid: req.body.uuid
+  };
+
+  const query: string = `select spUpdateUsuario(
+    '${jsonConf.nombre}' :: varchar,
+    '${jsonConf.email}' :: varchar,
+    '${jsonConf.TipoOrganizacion}' :: varchar,
+    '${jsonConf.uuid}' :: varchar);`;
+
+  pool_users.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+
+      if(result.rows[0].spupdateusuario === true) res.status(200).send({'ok': '1'});
+      else res.status(200).send({'ok': '0'});
+    })
+  })
+})
+
+app.post("/api/planta_nueva",async(req,res) =>{
+  const jsonConf = {
+    userId: req.body.userId,
+    nombrePlanta: req.body.nombrePlanta
+  };
+
+  const query: string = `select spNuevaPlanta(
+    '${jsonConf.nombrePlanta}' :: varchar,
+    ${jsonConf.userId});`;
+
+  pool_plants.connect((err, client, release) => {
+    if (err) {
+      res.sendStatus(500);
+      return console.error('Error acquiring client', err.stack)
+    }
+    
+    client.query(query, (err, result) => {
+      release()
+      if (err) {
+        res.sendStatus(500);
+        return console.error('Error executing query', err.stack)
+      }
+
+      if(result.rows[0].spnuevaplanta === true) res.status(200).send({'ok': '1'});
+      else res.status(200).send({'ok': '0'});
+    })
+  })
+})
+
 
 // Familia
 
@@ -478,49 +583,6 @@ app.post("/api/agregar_planta",async(req,res) =>{
   })
 })
 
-app.post("/api/getPlantasDeUsuario",async(req,res) =>{
-  const id: string = req.body.id;
-
-  const query: string = `SELECT 
-                familia,
-                fenologia,
-                polinizador,
-                metododispersion,
-                nombrecomun,
-                nombrecientifico,
-                origen,
-                minRangoaltitudinal,
-                maxRangoaltitudinal,
-                metros,
-                requerimientosdeluz,
-                habito,
-                frutos,
-                texturafruto,
-                flor,
-                usosconocidos,
-                paisajerecomendado,
-                imagen
-                from spGetPlantasXUsuario(${id})`;
-
-  pool_plants.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-      
-      res.status(200).send({"plantas":result.rows});
-      
-    })
-  })
-})
-
 app.post("/api/modificar_planta",async(req,res) =>{
   const planta: Plant = new Plant(
     req.body.nombreComun,
@@ -740,40 +802,6 @@ app.post("/api/eliminarVivero",async(req,res) =>{
 })
 
 // Execute
-
-app.post("/api/update_user",async(req,res) =>{
-  const jsonConf = {
-    email: req.body.correo,
-    nombre: req.body.nombre,
-    TipoOrganizacion: req.body.tipoOrganizacion,
-    uuid: req.body.uuid
-  };
-
-  const query: string = `select spUpdateUsuario(
-    '${jsonConf.nombre}' :: varchar,
-    '${jsonConf.email}' :: varchar,
-    '${jsonConf.TipoOrganizacion}' :: varchar,
-    '${jsonConf.uuid}' :: varchar);`;
-
-  pool_users.connect((err, client, release) => {
-    if (err) {
-      res.sendStatus(500);
-      return console.error('Error acquiring client', err.stack)
-    }
-    
-    client.query(query, (err, result) => {
-      release()
-      if (err) {
-        res.sendStatus(500);
-        return console.error('Error executing query', err.stack)
-      }
-
-      if(result.rows[0].spupdateusuario === true) res.status(200).send({'ok': '1'});
-      else res.status(200).send({'ok': '0'});
-    })
-  })
-
-})
 
 // Heroku, asigna puertos dinámicos
 // Ref: https://stackoverflow.com/a/15693371
