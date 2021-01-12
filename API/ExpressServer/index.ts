@@ -415,7 +415,8 @@ app.post("/api/agregar_planta",async(req,res) =>{
     req.body.texturaFruto, 
     req.body.flor, 
     req.body.usosConocidos, 
-    req.body.paisajeRecomendado);
+    req.body.paisajeRecomendado,
+    req.body.imagen);
 
   const query: string = `select spagregarplanta(
     '${planta.nombreComun}' :: varchar,
@@ -475,7 +476,8 @@ app.post("/api/getPlantasDeUsuario",async(req,res) =>{
                 texturafruto,
                 flor,
                 usosconocidos,
-                paisajerecomendado 
+                paisajerecomendado,
+                imagen
                 from spGetPlantasXUsuario(${id})`;
 
   pool_plants.connect((err, client, release) => {
@@ -515,7 +517,8 @@ app.post("/api/modificar_planta",async(req,res) =>{
     req.body.texturaFruto, 
     req.body.flor, 
     req.body.usosConocidos, 
-    req.body.paisajeRecomendado);
+    req.body.paisajeRecomendado,
+    req.body.imagen);
 
   const query: string = `select spmodificarplanta(
     '${planta.nombreComun}',

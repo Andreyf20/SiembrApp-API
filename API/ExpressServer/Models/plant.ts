@@ -16,6 +16,7 @@ export class Plant {
     flor: string;
     usosConocidos: string;
     paisajeRecomendado: string;
+    imagen: string;
 
     constructor(nombreComun: string, 
         nombreCientifico: string, 
@@ -33,7 +34,8 @@ export class Plant {
         texturaFruto: string,
         flor: string,
         usosConocidos: string,
-        paisajeRecomendado: string){
+        paisajeRecomendado: string,
+        imagen: string){
             this.nombreComun = nombreComun;
             this.nombreCientifico = nombreCientifico;
             this.origen = origen;
@@ -51,5 +53,6 @@ export class Plant {
             this.flor = flor;
             this.usosConocidos = usosConocidos;
             this.paisajeRecomendado = paisajeRecomendado;
+            this.imagen = imagen;
     }
 }
