@@ -562,7 +562,8 @@ app.post("/api/agregar_planta",async(req,res) =>{
     '${planta.texturaFruto}' :: varchar,
     '${planta.flor}' :: varchar,
     '${planta.usosConocidos}' :: varchar,
-    '${planta.paisajeRecomendado}' :: varchar);`;
+    '${planta.paisajeRecomendado}' :: varchar,
+    '${planta.imagen}' :: varchar);`;
 
   pool_plants.connect((err, client, release) => {
     if (err) {
