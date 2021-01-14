@@ -22,7 +22,7 @@ CREATE OR REPLACE FUNCTION spAgregarPlanta(
 
     usosConocidosInput varchar,
     paisajeRecomendadoInput varchar,
-    imagenInput TEXT
+    imagenInput varchar
 
 )
 RETURNS BOOLEAN
