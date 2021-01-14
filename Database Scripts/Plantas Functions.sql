@@ -226,7 +226,7 @@ CREATE OR REPLACE FUNCTION spModificarPlanta(
 
     usosConocidosInput varchar,
     paisajeRecomendadoInput varchar,
-    imagen TEXT
+    imagenInput varchar
 
 )
 RETURNS BOOLEAN
