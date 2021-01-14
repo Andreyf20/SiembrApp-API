@@ -546,23 +546,24 @@ app.post("/api/agregar_planta",async(req,res) =>{
     req.body.imagen);
 
   const query: string = `select spagregarplanta(
-    '${planta.nombreComun}' :: varchar,
-    '${planta.nombreCientifico}' :: varchar,
-    '${planta.origen}' :: varchar,
+    '${planta.nombreComun}',
+    '${planta.nombreCientifico}',
+    '${planta.origen}',
     ${planta.minRangoAltitudinal},
     ${planta.maxRangoAltitudinal},
     ${planta.metros},
-    '${planta.requerimientosDeLuz}' :: varchar,
-    '${planta.habito}' :: varchar,
-    '${planta.familia}' :: varchar,
-    '${planta.fenologia}' :: varchar,
-    '${planta.agentePolinizador}' :: varchar,
-    '${planta.metodoDispersion}' :: varchar,
-    '${planta.frutos}' :: varchar,
-    '${planta.texturaFruto}' :: varchar,
-    '${planta.flor}' :: varchar,
-    '${planta.usosConocidos}' :: varchar,
-    '${planta.paisajeRecomendado}' :: varchar);`;
+    '${planta.requerimientosDeLuz}',
+    '${planta.habito}',
+    '${planta.familia}',
+    '${planta.fenologia}',
+    '${planta.agentePolinizador}',
+    '${planta.metodoDispersion}',
+    '${planta.frutos}',
+    '${planta.texturaFruto}',
+    '${planta.flor}',
+    '${planta.usosConocidos}',
+    '${planta.paisajeRecomendado}'),
+    '${planta.imagen}';`;
 
   pool_plants.connect((err, client, release) => {
     if (err) {
