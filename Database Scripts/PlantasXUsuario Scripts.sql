@@ -101,7 +101,7 @@ AS $$
                 LEFT JOIN fenologia FL ON P.idFenologia  = FL.idFenologia
                 LEFT JOIN agentePolinizador AP ON P.idAgentePolinizador = AP.idAgentePolinizador
                 LEFT JOIN metodoDispersion MD ON P.idMetodoDispersion = MD.idMetodoDispersion
-                WHERE P.borrado = False and PXU.iduser = userIdInput;
+                WHERE P.borrado = false and PXU.borrado = false and PXU.iduser = userIdInput;
 	END;
 
 $$ LANGUAGE PLPGSQL;
