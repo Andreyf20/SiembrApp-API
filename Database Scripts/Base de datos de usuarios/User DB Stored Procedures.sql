@@ -151,8 +151,6 @@ select spCrearTipoOrganizacion('Otro') as success;
 select * from TipoOrganizacion;
 */
 
-drop function if exists spUpdateUsuario;
-
 CREATE OR REPLACE FUNCTION spUpdateUsuario(
     nombreInput varchar,
     correoInput varchar,
@@ -166,7 +164,7 @@ AS $$
         idUsuarioBuscado BIGINT := (SELECT U.idUsuario FROM Users U WHERE U.usuario_uid::varchar LIKE usuario_uidInput);
 		_idTipoOrganizacion BIGINT := (SELECT T.idTipoOrganizacion FROM TipoOrganizacion T WHERE T.nombre LIKE tipoOrganizacionInput);
 		correoRepetido BOOLEAN := (select
-									case when exists (SELECT 1 FROM Users U WHERE U.correo LIKE correoInput LIMIT 1)
+									case when exists (SELECT 1 FROM Users U WHERE U.correo LIKE correoInput AND usuario_uidInput != U.usuario_uid::varchar LIMIT 1)
 										then TRUE
 										else FALSE
 									end);
@@ -192,7 +190,7 @@ AS $$
     END;
 $$ LANGUAGE PLPGSQL;
 
--- select spUpdateUsuario('XD', 'xd3@gmail.com', 'ONG', '860f39d0-6ee6-47a9-a34f-0e449b8bd477') as success;
+-- select spUpdateUsuario('XD', 'leolestrada@hotmail.com', 'Otro', '860f39d0-6ee6-47a9-a34f-0e449b8bd477') as success;
 
 -- Retorna el UUID usando el correo del usuario
 CREATE OR REPLACE FUNCTION spGetUserUUIDwithEmail(
