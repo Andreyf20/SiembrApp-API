@@ -55,7 +55,7 @@ $$
                 LEFT JOIN fenologia FL ON P.idFenologia  = FL.idFenologia
                 LEFT JOIN agentePolinizador AP ON P.idAgentePolinizador = AP.idAgentePolinizador
                 LEFT JOIN metodoDispersion MD ON P.idMetodoDispersion = MD.idMetodoDispersion
-                WHERE LOWER(P.nombreComun) LIKE lower(filtro_wildcard) or LOWER(P.nombreCientifico) LIKE lower(filtro_wildcard) or LOWER(P.origen) LIKE lower(filtro_wildcard) or LOWER(P.requerimientosDeLuz) LIKE lower(filtro_wildcard) or LOWER(P.habito) LIKE lower(filtro_wildcard) or LOWER(P.frutos) LIKE lower(filtro_wildcard) or LOWER(P.texturaFruto) LIKE lower(filtro_wildcard) or LOWER(P.flor) LIKE lower(filtro_wildcard) or LOWER(P.usosConocidos) LIKE lower(filtro_wildcard) or LOWER(P.paisajeRecomendado) LIKE lower(filtro_wildcard) or LOWER(F.nombre) LIKE lower(filtro_wildcard) or LOWER(FL.nombre) LIKE lower(filtro_wildcard) or LOWER(AP.nombre) LIKE lower(filtro_wildcard) or LOWER(MD.nombre) LIKE lower(filtro_wildcard) or P.minRangoAltitudinal :: varchar = filtro or P.maxRangoAltitudinal :: varchar = filtro or P.metros :: varchar = filtro and P.borrado = False;
+                WHERE (P.borrado != true) and (LOWER(P.nombreComun) LIKE lower(filtro_wildcard) or LOWER(P.nombreCientifico) LIKE lower(filtro_wildcard) or LOWER(P.origen) LIKE lower(filtro_wildcard) or LOWER(P.requerimientosDeLuz) LIKE lower(filtro_wildcard) or LOWER(P.habito) LIKE lower(filtro_wildcard) or LOWER(P.frutos) LIKE lower(filtro_wildcard) or LOWER(P.texturaFruto) LIKE lower(filtro_wildcard) or LOWER(P.flor) LIKE lower(filtro_wildcard) or LOWER(P.usosConocidos) LIKE lower(filtro_wildcard) or LOWER(P.paisajeRecomendado) LIKE lower(filtro_wildcard) or LOWER(F.nombre) LIKE lower(filtro_wildcard) or LOWER(FL.nombre) LIKE lower(filtro_wildcard) or LOWER(AP.nombre) LIKE lower(filtro_wildcard) or LOWER(MD.nombre) LIKE lower(filtro_wildcard) or P.minRangoAltitudinal :: varchar = filtro or P.maxRangoAltitudinal :: varchar = filtro or P.metros :: varchar = filtro);
         ELSE
             RETURN QUERY
                 SELECT
@@ -85,7 +85,7 @@ $$
                 LEFT JOIN fenologia FL ON P.idFenologia  = FL.idFenologia
                 LEFT JOIN agentePolinizador AP ON P.idAgentePolinizador = AP.idAgentePolinizador
                 LEFT JOIN metodoDispersion MD ON P.idMetodoDispersion = MD.idMetodoDispersion
-                WHERE P.borrado = False;
+                WHERE P.borrado != true;
         END IF;
         
     END;
@@ -97,5 +97,5 @@ select * from spverplantas('*');
 select * from spverplantas('Saragundí');
 select * from spverplantas('senna reticulata');
 select * from spverplantas('500');
-select * from spverplantas('15m');
+select * from spverplantas('Dipteryx panamensis');
 */
